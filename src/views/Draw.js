@@ -14,7 +14,7 @@ export default function Draw() {
 
     const ref = useRef()
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
     const getNewPrompt = async () => {
         try {

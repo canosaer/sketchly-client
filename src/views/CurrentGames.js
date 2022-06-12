@@ -16,7 +16,7 @@ export default function CurrentGames() {
 
     const identity = useIdentifier()
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
     const loadGame = async (index) => {
 

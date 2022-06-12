@@ -15,7 +15,7 @@ export default function GameHeader(props) {
     const dimmerStyles = clicked ? 'dimmer dimmer_open' : 'dimmer'
     const transitionStyles = clicked ? 'transition transition_open' : 'transition'
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
     const saveGame = () => {
 

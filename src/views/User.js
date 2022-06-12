@@ -11,7 +11,7 @@ export default function User() {
     const [ touched, setTouched ] = useState(false)
     const [ userID, setUserID ] = useLocalStorage('userID', '')
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
 
     const enterGame = async () => {

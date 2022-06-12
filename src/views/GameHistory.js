@@ -14,7 +14,7 @@ export default function GameHistory() {
     const [ images, setImages ] = useState([])
     const [ turns, setTurns ]  = useState([])
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
     const ref = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef(),]
 

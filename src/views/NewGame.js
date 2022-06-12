@@ -16,7 +16,7 @@ export default function NewGame() {
 
     const debouncedGameName = useDebounce(name, 500)
 
-    const url = process.env.BASE_URL
+    const url = process.env.REACT_APP_BASE_URL
 
     const updateState = async () => {
         try {
