@@ -1,0 +1,28 @@
+@use 'variables';
+@use 'mixins';
+
+.user{
+    @include mixins.name-input-page;
+
+    &__heading{
+        @include mixins.name-input-heading;
+        margin-top: 2rem;
+    }
+
+    &__input{
+        @include mixins.text-input;
+        margin: 1.95rem 1.5rem 0.5rem;
+    }
+
+    &__error{
+        @include mixins.name-input-error;
+    }
+
+    &__submit{
+        @include mixins.default-grid;
+        @include mixins.interface-button;
+        margin-bottom: 5rem;
+        text-align: center;
+
+    }
+}

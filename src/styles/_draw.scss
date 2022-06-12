@@ -1,0 +1,100 @@
+@use 'variables';
+@use 'mixins';
+
+.draw{
+    background: linear-gradient(var(--spearmint), var(--baby-blue));
+    grid-auto-rows: max-content;
+    min-height: 100vh;
+    font-family: var(--heading-font);
+
+    &__canvas{
+        justify-self: center;
+    }
+
+    &__bottom-row{
+        @include mixins.default-grid;
+        grid-template-columns: 1fr 0.55fr;
+        margin-bottom: 5rem;
+    }
+
+    &__submit{
+        place-self: center center;
+        width: 5rem;
+        height: 5rem;
+        border: none;
+        border-radius: 0.7rem;
+        cursor: pointer;
+        font-size: 2.5rem;
+        background: var(--baby-blue);
+        color: var(--dark-blue);
+    }
+}
+
+.palette{
+    @include mixins.default-grid;
+    padding: 0 3%;
+    grid-column-gap: 3%;
+    grid-row-gap: 1rem;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 2.25rem);
+    position: relative;
+    margin-top: 1rem;
+    max-width: 16.5rem;
+
+    &__color{
+        @include mixins.image-slot;
+		padding-bottom: 100%;
+		border-radius: 0.7rem;
+        cursor: pointer;
+
+        &_black{
+            background: black;
+        }
+
+        &_gray{
+            background: gray;
+        }
+
+        &_blue{
+            background: blue;
+        }
+
+        &_green{
+            background: green;
+        }
+
+        &_red{
+            background: red;
+        }
+
+        &_yellow{
+            background: yellow;
+        }
+
+        &_orange{
+            background: orange;
+        }
+
+        &_purple{
+            background: purple;
+        }
+
+        &_pink{
+            background: pink;
+        }
+
+        &_brown{
+            background: brown;
+        }
+
+        &_erase{
+            @include mixins.default-grid;
+        }
+    }
+
+    &__icon{
+        place-self: center center;
+        font-size: 2rem;
+        color: var(--dark-blue);
+    }
+}

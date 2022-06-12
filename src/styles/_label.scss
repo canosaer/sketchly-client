@@ -1,0 +1,30 @@
+@use 'variables';
+@use 'mixins';
+
+.label{
+    @include mixins.page-formatting;
+    grid-auto-rows: max-content;
+
+    &__input{
+        @include mixins.text-input;
+        margin: 1.5rem;
+    }
+
+    &__submit{
+        @include mixins.default-grid;
+        @include mixins.interface-button;
+        margin-bottom: 5rem;
+    }
+
+    &__submit-icon{
+        @include mixins.button-icon;
+    }
+
+    &__submit-text{
+        @include mixins.button-text;
+    }
+
+    &__canvas{
+        pointer-events: none;
+    }
+}

@@ -1,0 +1,45 @@
+@use 'variables';
+@use 'mixins';
+
+.archive{
+    @include mixins.page-formatting;
+    grid-auto-rows: max-content;
+
+    &__heading{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 2rem;
+    }
+
+    &__game-display{
+		@include mixins.default-grid;
+        @include mixins.game-display;
+        grid-row-gap: 2rem;
+	}
+
+    .game{
+        @include mixins.default-grid;
+        @include mixins.game-card;
+        height: 11.5rem;
+    
+        &__name{
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.75rem;
+        }
+    
+        &__updated{
+            margin-bottom: 0.75rem;
+        }
+    
+        &__contributors{
+            color: var(--baby-blue);
+            font-size: 0.85rem;
+            text-align: left;
+            line-height: 1.35;
+            margin: 0.5rem 1rem 0;
+        }
+    }
+}
+

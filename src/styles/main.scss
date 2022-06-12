@@ -1,0 +1,112 @@
+/* 
+==============================================
+CONTENT:	Sketchly
+AUTHOR:		Eric Canosa
+==============================================
+
+TABLE OF CONTENTS:
+
+0. Initialization
+1. Partials
+2. Fonts
+3. General
+4. Utility
+
+==============================================
+*/
+
+/* 0. Initialization ========================= */
+@use 'reset';
+@use 'variables';
+@use 'mixins';
+
+/* 1. Partials =============================== */
+@use 'header';
+@use 'title-screen';
+@use 'current-games';
+@use 'user';
+@use 'draw';
+@use 'timer';
+@use 'game-header';
+@use 'label';
+@use 'new-game';
+@use 'archive';
+@use 'history';
+@use 'transition';
+
+/* 2. Fonts ================================== */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+
+/* 3. General ================================ */
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+a{
+	text-decoration: none;
+}
+
+body{
+	
+	font-family: 'Open Sans', sans-serif;
+}
+
+#root{
+	@include mixins.default-grid;
+}
+
+main{
+	@include mixins.default-grid;
+	position: relative;
+	width: 100%;
+	max-width: 414px;
+	place-self: center center;
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 4. Utility ================================ */
+
+.hidden{
+	display: none;
+}
+
+.invisible{
+	visibility: hidden;
+}
+
+.transparent{
+	opacity: 0;
+}
+
+.dimmer{
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 0vh;
+	background-color: whitesmoke;
+	opacity: 0.5;
+	left: 0;
+	top: 0;
+	transition: .3s background-color ease-in;
+
+	&_open{
+		height: 100vh;
+		background-color: black;
+	}
+}
+
+.send-to-rear{
+	z-index: -99;
+}
+
+.bring-to-front{
+	z-index: 99;
+}
+
+.nowrap{
+	white-space: nowrap;
+}

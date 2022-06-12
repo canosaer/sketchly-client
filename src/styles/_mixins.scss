@@ -1,0 +1,137 @@
+@use 'variables';
+
+@mixin landscape {
+    @media (min-width: 768px){
+      @content;
+    }
+  }
+  
+@mixin medium-screen {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin wide-screen {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin default-grid{
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr;
+}
+
+@mixin default-img{
+  object-fit: cover;
+	object-position: center;
+}
+
+@mixin default-background{
+  background-size: cover;
+	background-position: center;
+}
+
+@mixin cover-parent{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+@mixin image-slot{
+  height: 0;
+  position: relative;
+}
+
+@mixin interface-button{
+  cursor: pointer;
+  border: none;
+  outline: none;
+  place-self: center center;
+  width: 10rem;
+  padding: 0.75rem 0;
+  font-size: 1.25rem;
+  border-radius: 999rem;
+  background-color: var(--dark-blue);
+  color: var(--baby-blue);
+}
+
+@mixin button-icon{
+  grid-column: 1/2;
+  grid-row: 1/2;
+  margin-right: 4rem;
+  place-self: center center;
+}
+
+@mixin button-text{
+  grid-column: 1/2;
+  grid-row: 1/2;
+  margin-left: 2rem;
+  place-self: center center;
+}
+
+@mixin page-formatting{
+  background: linear-gradient(var(--spearmint), var(--baby-blue));
+  min-height: 100vh;
+  font-family: var(--heading-font);
+  color: var(--dark-blue);
+}
+
+@mixin text-input{
+  font-size: 1.2rem;
+  border-radius: 0.7rem;
+  background-color: rgba(255,255,255, 0.5);
+  padding: 0.5rem;
+  border: 2px solid var(--dark-blue);
+  outline: none;
+  color: var(--dark-blue);
+}
+
+@mixin game-display{
+  padding: 2rem 3%;
+  grid-column-gap: 3%;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(21.35rem, 0.29fr));
+  margin-bottom: 8rem;
+}
+
+@mixin game-card{
+  grid-auto-rows: max-content;
+  position: relative;
+  background-color: var(--dark-blue);
+  color: var(--baby-blue);
+  cursor: pointer;
+  text-align: center;
+  border-radius: 0.7rem;
+}
+
+@mixin inactive-game{
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+@mixin name-input-page{
+  background: linear-gradient(var(--spearmint), var(--baby-blue));
+  grid-auto-rows: max-content;
+  min-height: 100vh;
+  font-family: var(--heading-font);
+  color: var(--dark-blue);
+}
+
+@mixin name-input-heading{
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@mixin name-input-error{
+  text-align: center;
+  place-self: center center;
+  margin-bottom: 0.5rem;
+}
+

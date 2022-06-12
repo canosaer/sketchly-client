@@ -1,0 +1,88 @@
+@use 'variables';
+@use 'mixins';
+
+.history{
+    @include mixins.page-formatting;
+    grid-auto-rows: max-content;
+    padding-bottom: 5rem;
+
+    .header{
+        margin-bottom: 2rem;
+    }
+
+    &__link-row{
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        margin: 2rem 0;
+    }
+
+    &__link{
+        font-size: 1.1rem;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        border-radius: 999rem;
+        background: var(--dark-blue);
+        color: var(--baby-blue);
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        text-align: center;
+    }
+
+    &__heading{
+        text-align: center;
+        font-size: 2.45em;
+        color: var(--dark-blue);
+        margin-bottom: 2rem;
+    }
+
+    &__word{
+        text-align: center;
+        place-self: center center;
+        font-size: 1.75rem;
+        margin: 0 2rem 2rem;
+        position: relative;
+    }
+
+    &__canvas-container{
+        position: relative;
+    }
+
+    &__canvas{
+        pointer-events: none;
+        margin-bottom: 2rem;
+    }
+
+    &__user{
+        position: absolute;
+        border-radius: 999rem;
+        width: max-content;
+        font-size: 1rem;
+        top: 0.2rem;
+        left: 0.25rem;
+        opacity: 0.95;
+
+        &_word{
+            top: -1rem;
+            left: 0;
+        }
+    }
+
+    &__loading{
+        animation: spin infinite 1.95s linear;
+        font-size: 5rem;
+        place-self: center center;
+        margin: 1.5rem 0 4rem;
+    }
+
+}
+
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}

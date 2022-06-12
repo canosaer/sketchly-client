@@ -1,0 +1,32 @@
+@use 'variables';
+@use 'mixins';
+
+.title-screen{
+    @include mixins.page-formatting;
+    grid-template-rows: max-content auto max-content;
+    
+
+  &__text{
+    grid-column: 1/2;
+    grid-row: 2/3;
+    place-self: center center;
+    font-size: 2.05rem;
+    text-align: center;
+    margin: 7.1%;
+  }
+
+  &__button{
+    @include mixins.default-grid;
+    @include mixins.interface-button;
+    margin-bottom: 5rem;
+  }
+
+  &__button-icon{
+    @include mixins.button-icon;
+  }
+
+  &__button-text{
+    @include mixins.button-text;
+  }
+
+}
