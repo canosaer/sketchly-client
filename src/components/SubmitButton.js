@@ -10,13 +10,12 @@ export default function GameHeader(props) {
     const [ state, dispatch ] = useContext(Context)
     const [ clicked, setClicked ] = useState(false)
     const [ userName, setUserName ] = useLocalStorage('userName', '')
-    const [ userID, setUserID ] = useLocalStorage('userID', '')
     const [ saved, setSaved ] = useState(false)
 
     const dimmerStyles = clicked ? 'dimmer dimmer_open' : 'dimmer'
     const transitionStyles = clicked ? 'transition transition_open' : 'transition'
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const saveGame = () => {
 

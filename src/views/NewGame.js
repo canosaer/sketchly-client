@@ -16,7 +16,7 @@ export default function NewGame() {
 
     const debouncedGameName = useDebounce(name, 500)
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const updateState = async () => {
         try {

@@ -16,7 +16,7 @@ export default function CurrentGames() {
 
     const identity = useIdentifier()
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const loadGame = async (index) => {
 

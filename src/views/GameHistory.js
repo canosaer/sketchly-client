@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import SignatureCanvas from 'react-signature-canvas'
-import { useWindowDimensions } from '../utilities'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Context } from '../store/store'
 import Header from '../components/Header'
@@ -15,7 +14,7 @@ export default function GameHistory() {
     const [ images, setImages ] = useState([])
     const [ turns, setTurns ]  = useState([])
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const ref = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef(),]
 

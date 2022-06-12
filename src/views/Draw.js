@@ -3,7 +3,6 @@ import SignatureCanvas from 'react-signature-canvas'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import GameHeader from '../components/GameHeader'
 import SubmitButton from '../components/SubmitButton'
-import { useWindowDimensions } from '../utilities'
 import { Context } from '../store/store'
 import axios from 'axios'
 
@@ -15,7 +14,7 @@ export default function Draw() {
 
     const ref = useRef()
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const getNewPrompt = async () => {
         try {

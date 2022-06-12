@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -14,7 +13,7 @@ export default function Archive() {
     const [ init, setInit ] = useState(false)
     const [ userID, setUserID ] = useLocalStorage('userID', '')
     
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const loadGame = (index) => {
 

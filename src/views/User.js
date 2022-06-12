@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import { Context } from '../store/store'
@@ -11,7 +11,7 @@ export default function User() {
     const [ touched, setTouched ] = useState(false)
     const [ userID, setUserID ] = useLocalStorage('userID', '')
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
 
     const enterGame = async () => {

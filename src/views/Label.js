@@ -1,8 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import SignatureCanvas from 'react-signature-canvas'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useWindowDimensions } from '../utilities'
 import { Context } from '../store/store'
 import GameHeader from '../components/GameHeader'
 import SubmitButton from '../components/SubmitButton'

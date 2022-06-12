@@ -16,7 +16,7 @@ export default function GameHeader(props) {
     const dimmerStyles = quitMenuOpen ? 'dimmer dimmer_open' : 'dimmer'
     const quitStyles = quitMenuOpen ? 'quit quit_open' : 'quit'
 
-    const url = 'http://localhost:1337'
+    const url = process.env.BASE_URL
 
     const lockScroll = () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop
