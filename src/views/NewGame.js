@@ -13,17 +13,26 @@ export default function NewGame() {
     const [ passwordOn, setPasswordOn ] = useState(false)
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('none')
+    const [ games, setGames ] = useState([])
+    const [ init, setInit ] = useState(false)
 
     const debouncedGameName = useDebounce(name, 500)
 
     const url = process.env.REACT_APP_BASE_URL
 
     const updateState = async () => {
+        retrieveGames()
+        const gameData = games.filter(game => game.name === name)
+        dispatch ({type: 'LOAD_GAME', payload: gameData.data})
+
+    }
+
+    const retrieveGames = async () => {
         try {
-            const gameData = await axios.get(`${url}/games/${name}`)
-            dispatch ({type: 'LOAD_GAME', payload: gameData.data})
+          const response = await axios.get('/api/allGames')
+          setGames(response.data.filter(game => game.turn < 12))
         } catch (err) {
-            console.log(err.message, err.code)
+          console.log(err.message, err.code)
         }
     }
 
@@ -34,10 +43,11 @@ export default function NewGame() {
         if(error === 'none'){
             let game = {
                 name: name,
+                nameLower: name.toLowerCase(),
             }
             if (password) game.password = password
     
-            axios.post(`${url}/games`, game)
+            axios.post('api/createGame', JSON.stringify(game))
                 .then(()=>{
                     updateState()
                 })
@@ -50,15 +60,10 @@ export default function NewGame() {
     const validateName = async (nameInput) => {
         if(nameInput){
             setError('none')
-            try {
-                const response = await axios.get(`${url}/games/${nameInput}`)
-                if(response.data){
-                    setError('Game name already taken.')
-                }
-                else setError('none')
-            } catch (err) {
-              console.log(err.message, err.code)
+            if(games.filter(game => game.nameLower === nameInput.toLowerCase())[0]){
+                setError('Game name already taken.')
             }
+            else setError('none')
         }
         else setError('Required.')
     }
@@ -68,6 +73,13 @@ export default function NewGame() {
             validateName(debouncedGameName)
         }
     }, [debouncedGameName])
+
+    useEffect(() => {
+        if(!init){
+            retrieveGames()
+            setInit(true)
+        }
+    }, [init, games])
     
 
     return(

@@ -13,10 +13,20 @@ export default function GameHistory() {
     const [ game, setGame ] = useState({})
     const [ images, setImages ] = useState([])
     const [ turns, setTurns ]  = useState([])
+    const [ games, setGames ] = useState([])
 
     const url = process.env.REACT_APP_BASE_URL
 
     const ref = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef(),]
+
+    const retrieveGames = async () => {
+        try {
+          const response = await axios.get('/api/allGames')
+          setGames(response.data)
+        } catch (err) {
+          console.log(err.message, err.code)
+        }
+    }
 
     const loadGame = async () => {
         if(state.origin === 'submit'){
@@ -24,12 +34,17 @@ export default function GameHistory() {
             setImages(state.images)
         }
         else{
+            retrieveGames()
             try {
-                const gameData = await axios.get(`${url}/games/${state.game.name}`)
+                const gameData = games.filter(game => game.name === state.game.name)
                 setGame(gameData.data)
 
-                const imageData = await axios.get(`${url}/images/${state.game.name}`)
-                setImages(imageData.data)
+                const imageData = {
+                    game: state.game.name,
+                }
+
+                const response = await axios.get('/api/imageSet', JSON.stringify(imageData))
+                setImages(response.data)
             } catch (err) {
                 console.log(err.message, err.code)
             }

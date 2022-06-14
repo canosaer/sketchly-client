@@ -1,19 +1,19 @@
 const axios = require('axios')
 require('dotenv').config()
-const { CREATE_GAME } = require('./utils/sketchlyQueries.js')
+const { UPDATE_PHRASE } = require('./utils/sketchlyQueries.js')
 const sendQuery = require('./utils/sendQuery')
 const formattedResponse = require('./utils/formattedResponse')
 
 exports.handler = async (event) => {
-    if(event.httpMethod !== 'POST') {
+    if(event.httpMethod !== 'PATCH' || 'PUT') {
         return formattedResponse(405, {err: 'wrong method'})
     }
 
-    const { name, nameLower, turn, active } = JSON.parse(event.body)
-    const variables =  { name, nameLower, turn, active }
+    const { content, available } = JSON.parse(event.body)
+    const variables =  { content, available }
     try {
-        const { createGame: createdGame } = await sendQuery(CREATE_GAME, variables);
-        return formattedResponse(200, createdGame)
+        const { updatePhrase: updatedPhrase } = await sendQuery(UPDATE_PHRASE, variables);
+        return formattedResponse(200, updatedPhrase)
 
     } catch (err) {
         console.error(err)

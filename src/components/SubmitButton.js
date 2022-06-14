@@ -21,32 +21,42 @@ export default function GameHeader(props) {
 
         const image = JSON.stringify(props.image.current.toData())
 
-        const gameData = {
-            mode: props.mode,
-            userName: userName,
+        let contributorNames = state.game.contributorNames || []
+        let phrases = state.game.phrases || []
+
+        let gameData = {
+            contributorNames: contributorNames.push(userName),
+            name: state.game.name,
+            turn: state.game.turn + 1,
+            lastTurn: Date.now(),
+            active: true,
+            phrases: phrases,
         }
 
         if(props.mode === 'label' || state.game.turn === 1){
-            gameData.phrase = props.phrase           
+            gameData.phrases.push(props.phrase)           
         }
 
-        axios.patch(`${url}/games/${state.game.name}`, gameData)
+        axios.patch('/api/updateGame', JSON.stringify(gameData))
             .catch((err)=>{
                 console.log(err.message, err.code)
             })
 
         if(props.mode === 'draw'){
+
             const imageData = {
                 image: image,
+                game: state.game.name,
             }
+
             if(state.game.turn === 1){
-                axios.post(`${url}/images/${state.game.name}`, imageData)
+                axios.post('/api/createImageSet', JSON.stringify(imageData))
                     .catch((err)=>{
                         console.log(err.message, err.code)
                     })
             }
             else{
-                axios.patch(`${url}/images/${state.game.name}`, imageData)
+                axios.patch('/api/updateImageSet', JSON.stringify(imageData))
                     .catch((err)=>{
                         console.log(err.message, err.code)
                     })

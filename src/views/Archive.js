@@ -22,7 +22,7 @@ export default function Archive() {
 
     const retrieveGames = async () => {
         try {
-          const response = await axios.get(`${url}/games`)
+            const response = await axios.get('/api/allGames')
           setGames(response.data.filter(game => game.turn > 11))
         } catch (err) {
           console.log(err.message, err.code)

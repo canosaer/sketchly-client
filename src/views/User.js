@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import { Context } from '../store/store'
@@ -15,21 +15,22 @@ export default function User() {
 
 
     const enterGame = async () => {
+        let accessList = state.game.accessedBy || []
 
         const payload = {
-            userID: userID,
-            action: 'UPDATE_ACCESS'
+            accessedBy: accessList.push(userID),
+            name: state.game.name
         }
 
-        axios.patch(`${url}/games/${state.game.name}`, payload)
+        axios.patch('/api/updateGame', JSON.stringify(payload))
             .catch((err)=>{
                 console.log(err.message, err.code)
             })
     }
 
-    // useEffect(() => {
-    //     console.log(state)
-    // }, [state])
+    useEffect(() => {
+        console.log(state)
+    }, [state])
 
     return(
         <>

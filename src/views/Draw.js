@@ -11,36 +11,52 @@ export default function Draw() {
     const [ penColor, setPenColor ] = useState('black')
     const [ eraseMode, setEraseMode ] = useState(false)
     const [ prompt, setPrompt ] = useState('')
+    const [ games, setGames ] = useState([])
 
     const ref = useRef()
 
     const url = process.env.REACT_APP_BASE_URL
 
+    const retrieveGames = async () => {
+        try {
+          const response = await axios.get('/api/allGames')
+          setGames(response.data.filter(game => game.turn < 12))
+        } catch (err) {
+          console.log(err.message, err.code)
+        }
+    }
+
     const getNewPrompt = async () => {
         try {
-            const response = await axios.get(`${url}/phrases`)
-            setPrompt(response.data.content)
+            const response = await axios.get('/api/allPhrases')
+            const availablePhrases = response.data.filter(phrase => phrase.available)
+            setPrompt(availablePhrases[0])
         } catch (err) {
             console.log(err.message, err.code)
         }
+
+        const body = {
+            content: prompt,
+            active: false
+        }
+
+        axios.patch('/api/updatePhrase', JSON.stringify(body))
+            .catch((err)=>{
+                console.log(err.message, err.code)
+            })
 
     }
 
     const loadPrompt = async () => {
         console.log('loadPrompt')
-        try {
-            const response = await axios.get(`${url}/games/${state.game.name}`)
-            console.log(response)
-            if(response.data.phrases[0]){
-                setPrompt(response.data.phrases[response.data.phrases.length-1])
-            } 
-            else{
-                getNewPrompt()
-            }
-        } catch (err) {
-            console.log(err.message, err.code)
+        retrieveGames()
+        const activeGame = games.filter(game => game.name === state.game.name)
+        if(activeGame.phrases[0]){
+            setPrompt(activeGame.phrases[activeGame.phrases.length-1])
+        } 
+        else{
+            getNewPrompt()
         }
-
     }
 
 

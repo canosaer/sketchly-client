@@ -19,26 +19,33 @@ export default function CurrentGames() {
     const url = process.env.REACT_APP_BASE_URL
 
     const loadGame = async (index) => {
+        const updateBody = {
+            name: games[index].name,
+            active: false
+        }
 
-        axios.patch(`${url}/games/${games[index].name}`, {action: 'DEACTIVATE'})
+        axios.patch('/api/updateGame', JSON.stringify(updateBody))
             .catch((err)=>{
                 console.log(err.message, err.code)
             })
 
         dispatch ({type: 'LOAD_GAME', payload: games[index]})
 
+        const imagesBody = {
+            game: games[index].name
+        }
+
         try {
-            const images = await axios.get(`${url}/images/${games[index].name}`)
+            const images = await axios.get('/api/imageSet', JSON.stringify(imagesBody))
             console.log(images)
-            // dispatch ({type: 'LOAD_IMAGES', payload: images})
-          } catch (err) {
+        } catch (err) {
             console.log(err.message, err.code)
         }       
     }
 
     const retrieveGames = async () => {
         try {
-          const response = await axios.get(`${url}/games`)
+          const response = await axios.get('/api/allGames')
           setGames(response.data.filter(game => game.turn < 12))
         } catch (err) {
           console.log(err.message, err.code)
@@ -61,7 +68,7 @@ export default function CurrentGames() {
                 <h1 className="current-games__heading current-games__heading_join">Join Current Game</h1>
                 <div className="current-games__game-display">
                     {games.map((game, i) => {
-                        const key = game._id
+                        const key = `game--${i}`
 
                         return(
                             <Link key={key} onClick={() => loadGame(i)} to="/user" className={!game.active ? "game game_inactive" : "game" }>

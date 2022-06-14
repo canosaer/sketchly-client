@@ -5,6 +5,10 @@ const sendQuery = require('./utils/sendQuery')
 const formattedResponse = require('./utils/formattedResponse')
 
 exports.handler = async (event) => {
+    if(event.httpMethod !== 'GET') {
+        return formattedResponse(405, {err: 'wrong method'})
+    }
+    
     try {
         const res = await sendQuery(GET_GAMES);
         const data = res.allGames.data
