@@ -59,8 +59,8 @@ const CREATE_IMAGESET = `
 `
 
 const UPDATE_GAME = `
-  mutation( $id: ID!, $name: String!, $nameLower: String!, $accessedBy: [String], $turn: Int!, $active: Boolean!  ) {
-        updateGame( id: $id, data: { name: $name, accessedBy: $accessedBy, turn: $turn, active: $active, nameLower: $nameLower }) {
+  mutation( $id: ID!, $name: String!, $nameLower: String!, $accessedBy: [String], $turn: Int!, $active: Boolean!, $contributorNames: [String], $phrases: [String], $lastTurn: Int  ) {
+        updateGame( id: $id, data: { name: $name, accessedBy: $accessedBy, turn: $turn, active: $active, nameLower: $nameLower, contributorNames: $contributorNames, phrases: $phrases, lastTurn: $lastTurn }) {
             _id
             name
         }

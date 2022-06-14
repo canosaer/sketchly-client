@@ -39,6 +39,8 @@ export default function User() {
             turn: state.game.turn
         }
 
+        dispatch ({type: 'LOAD_GAME', payload: payload})
+
         console.log(payload)
 
         axios.patch('/api/updateGame', JSON.stringify(payload))

@@ -33,10 +33,16 @@ export default function GameHeader(props) {
     }
 
     const reactivateGame = () => {
+
         const updateBody = {
+            _id: state.game._id,
             name: state.game.name,
-            active: true
+            nameLower: state.game.name.toLowerCase(),
+            active: true,
+            turn: state.game.turn
         }
+
+        dispatch ({type: 'LOAD_GAME', payload: updateBody})
 
         axios.patch('/api/updateGame', JSON.stringify(updateBody))
             .catch((err)=>{
