@@ -21,20 +21,27 @@ export default function GameHeader(props) {
 
         const image = JSON.stringify(props.image.current.toData())
 
-        let contributorNames = state.game.contributorNames || []
-        let phrases = state.game.phrases || []
+        let images = state.game.images ? state.game.images : []
 
-        let gameData = {
-            contributorNames: contributorNames.push(userName),
-            name: state.game.name,
-            turn: state.game.turn + 1,
-            lastTurn: Date.now(),
-            active: true,
-            phrases: phrases,
-        }
+        let contributorNames = state.game.contributorNames ? state.game.contributorNames : []
+        let phrases = state.game.phrases ? state.game.phrases : []
+        contributorNames.push(userName)
 
         if(props.mode === 'label' || state.game.turn === 1){
-            gameData.phrases.push(props.phrase)           
+            phrases.push(props.phrase)           
+        }
+
+        let date = Date.now()
+
+        let gameData = {
+            contributorNames: contributorNames,
+            name: state.game.name,
+            nameLower: state.game.name.nameLower,
+            turn: state.game.turn + 1,
+            lastTurn: date.toString(),
+            active: true,
+            phrases: phrases,
+            _id: state.game._id,
         }
 
         axios.patch('/api/updateGame', JSON.stringify(gameData))
@@ -44,8 +51,10 @@ export default function GameHeader(props) {
 
         if(props.mode === 'draw'){
 
+            images.push(image)
+
             const imageData = {
-                image: image,
+                images: images,
                 game: state.game.name,
             }
 
@@ -64,13 +73,16 @@ export default function GameHeader(props) {
         }
 
         console.log('data sent')
+        console.log(state)
 
+        let contributors = state.game.contributorNames ? state.game.contributorNames : []
+        contributors.push(userName)
 
         let gameObject = {
-            contributorNames: state.game.contributorNames,
+            contributorNames: contributors,
             name: state.game.name,
         }
-        gameObject.contributorNames.push(userName)
+
         if(state.game.turn === 1){
             let images = []
             images.push(image)
