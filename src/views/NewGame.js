@@ -20,13 +20,6 @@ export default function NewGame() {
 
     const url = process.env.REACT_APP_BASE_URL
 
-    const updateState = async () => {
-        retrieveGames()
-        const gameData = games.filter(game => game.name === name)
-        dispatch ({type: 'LOAD_GAME', payload: gameData.data})
-
-    }
-
     const retrieveGames = async () => {
         try {
           const response = await axios.get('/api/allGames')
@@ -44,12 +37,14 @@ export default function NewGame() {
             let game = {
                 name: name,
                 nameLower: name.toLowerCase(),
+                turn: 1,
+                active: false,
             }
             if (password) game.password = password
     
             axios.post('api/createGame', JSON.stringify(game))
                 .then(()=>{
-                    updateState()
+                    dispatch ({type: 'LOAD_GAME', payload: game})
                 })
                 .catch(()=>{
                     console.log(`failed to create ${name}`)

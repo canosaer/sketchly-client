@@ -11,6 +11,7 @@ const GET_GAMES = `
                 active
                 password
                 lastTurn
+                _id
             }
         }
     }
@@ -22,6 +23,7 @@ const GET_PHRASES = `
             data{
                 content
                 available
+                _id
             }
         }
     }
@@ -32,6 +34,7 @@ const GET_IMAGESET = `
         imageSet (game: $game) {
             data{
                 images
+                _id
             }
         }
     }
@@ -56,8 +59,8 @@ const CREATE_IMAGESET = `
 `
 
 const UPDATE_GAME = `
-  mutation( $name: String!, $accessedBy: [String], $turn: Int, $contributorNames: [String], $phrases: [String], $active: Boolean, lastTurn: Int  ) {
-        updateGame( name: $name, data: { accessedBy: $accessedBy, turn: $turn, contributorNames: $contributorNames, phrases: $phrases, active: $active, lastTurn: $lastTurn }) {
+  mutation( $id: ID!, $name: String!, $nameLower: String!, $accessedBy: [String], $turn: Int!, $active: Boolean!  ) {
+        updateGame( id: $id, data: { name: $name, accessedBy: $accessedBy, turn: $turn, active: $active, nameLower: $nameLower }) {
             _id
             name
         }
@@ -65,8 +68,8 @@ const UPDATE_GAME = `
 `
 
 const UPDATE_IMAGESET = `
-  mutation( $game: String!, $imageSet: [String]! ) {
-        updateImageSet( game: $game, data: { images: $images }) {
+  mutation( $id: ID!, $game: String, $imageSet: [String]! ) {
+        updateImageSet( id: $id, data: { game: $game, images: $images }) {
             _id
             game
         }
@@ -74,8 +77,8 @@ const UPDATE_IMAGESET = `
 `
 
 const UPDATE_PHRASE = `
-  mutation( $content: String!, $available: Boolean! ) {
-        updatePhrase( content: $content, data: { available: $available }) {
+  mutation( $id: ID!, $content: String, $available: Boolean! ) {
+        updatePhrase( id: $id, data: { content: $content, available: $available }) {
             _id
             content
         }

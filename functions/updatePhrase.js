@@ -9,8 +9,8 @@ exports.handler = async (event) => {
         return formattedResponse(405, {err: 'wrong method'})
     }
 
-    const { content, available } = JSON.parse(event.body)
-    const variables =  { content, available }
+    const { _id:id, content, available } = JSON.parse(event.body)
+    const variables =  { content, available, id }
     try {
         const { updatePhrase: updatedPhrase } = await sendQuery(UPDATE_PHRASE, variables);
         return formattedResponse(200, updatedPhrase)

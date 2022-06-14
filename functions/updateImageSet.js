@@ -9,8 +9,8 @@ exports.handler = async (event) => {
         return formattedResponse(405, {err: 'wrong method'})
     }
 
-    const { game, images } = JSON.parse(event.body)
-    const variables =  { game, images }
+    const { _id:id, game, images } = JSON.parse(event.body)
+    const variables =  { game, images, id }
     try {
         const { updateImageSet: updatedImageSet } = await sendQuery(UPDATE_IMAGESET, variables);
         return formattedResponse(200, {response: 'success'})

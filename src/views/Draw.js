@@ -11,7 +11,6 @@ export default function Draw() {
     const [ penColor, setPenColor ] = useState('black')
     const [ eraseMode, setEraseMode ] = useState(false)
     const [ prompt, setPrompt ] = useState('')
-    const [ games, setGames ] = useState([])
 
     const ref = useRef()
 
@@ -20,7 +19,7 @@ export default function Draw() {
     const retrieveGames = async () => {
         try {
           const response = await axios.get('/api/allGames')
-          setGames(response.data.filter(game => game.turn < 12))
+          loadPrompt(response.data.filter(game => game.turn < 12))
         } catch (err) {
           console.log(err.message, err.code)
         }
@@ -30,28 +29,27 @@ export default function Draw() {
         try {
             const response = await axios.get('/api/allPhrases')
             const availablePhrases = response.data.filter(phrase => phrase.available)
-            setPrompt(availablePhrases[0])
+            setPrompt(availablePhrases[0].content)
         } catch (err) {
             console.log(err.message, err.code)
         }
 
-        const body = {
-            content: prompt,
-            active: false
-        }
+        // const body = {
+        //     content: prompt,
+        //     active: false
+        // }
 
-        axios.patch('/api/updatePhrase', JSON.stringify(body))
-            .catch((err)=>{
-                console.log(err.message, err.code)
-            })
+        // axios.patch('/api/updatePhrase', JSON.stringify(body))
+        //     .catch((err)=>{
+        //         console.log(err.message, err.code)
+        //     })
 
     }
 
-    const loadPrompt = async () => {
+    const loadPrompt = (games) => {
         console.log('loadPrompt')
-        retrieveGames()
         const activeGame = games.filter(game => game.name === state.game.name)
-        if(activeGame.phrases[0]){
+        if(activeGame[0] && activeGame[0].phrases[0]){
             setPrompt(activeGame.phrases[activeGame.phrases.length-1])
         } 
         else{
@@ -62,7 +60,7 @@ export default function Draw() {
 
     useEffect(() => {
         if(!prompt){
-            loadPrompt()
+            retrieveGames()
         }
     }, [prompt])
 

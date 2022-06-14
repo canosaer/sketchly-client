@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import { Context } from '../store/store'
@@ -13,14 +13,33 @@ export default function User() {
 
     const url = process.env.REACT_APP_BASE_URL
 
+    const retrieveGames = async () => {
+        try {
+          const response = await axios.get('/api/allGames')
+          const activeGame = response.data.filter(game => game.name === state.game.name)
+          console.log(activeGame)
+          const id = activeGame[0]._id
+          enterGame(id)
+        } catch (err) {
+          console.log(err.message, err.code)
+        }
+    }
 
-    const enterGame = async () => {
-        let accessList = state.game.accessedBy || []
+
+    const enterGame = async (id) => {
+        let accessList = state.game.accessedBy ? state.game.accessedBy : []
+        accessList.push(userID)
 
         const payload = {
-            accessedBy: accessList.push(userID),
-            name: state.game.name
+            accessedBy: accessList,
+            _id: id,
+            name: state.game.name,
+            nameLower: state.game.name.toLowerCase(),
+            active: false,
+            turn: state.game.turn
         }
+
+        console.log(payload)
 
         axios.patch('/api/updateGame', JSON.stringify(payload))
             .catch((err)=>{
@@ -28,9 +47,9 @@ export default function User() {
             })
     }
 
-    useEffect(() => {
-        console.log(state)
-    }, [state])
+    // useEffect(() => {
+    //     console.log(state)
+    // }, [state])
 
     return(
         <>
@@ -42,7 +61,7 @@ export default function User() {
                     onChange={(e) => setUserName(e.target.value)}
                 />
                 <p onFocus={()=>!touched ? setTouched(true) : null} className={ !userName && touched ? "user__error" : "user__error transparent"}>Required</p>
-                <Link onClick={ userName ? enterGame : null } to={ userName ? state.game.turn % 2 === 0 ? '/label' : '/draw' : '/user' } className="user__submit">Ready!</Link>
+                <Link onClick={ userName ? retrieveGames : null } to={ userName ? state.game.turn % 2 === 0 ? '/label' : '/draw' : '/user' } className="user__submit">Ready!</Link>
             </main>
         </>
         
