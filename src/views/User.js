@@ -41,8 +41,6 @@ export default function User() {
 
         dispatch ({type: 'LOAD_GAME', payload: payload})
 
-        console.log(payload)
-
         axios.patch('/api/updateGame', JSON.stringify(payload))
             .catch((err)=>{
                 console.log(err.message, err.code)
